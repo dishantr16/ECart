@@ -34,18 +34,17 @@ def generate_font_files():
 def rename_svg_glyph_names(data):
   # hacky and slow (but safe) way to rename glyph-name attributes
   svg_path = os.path.join(FONTS_FOLDER_PATH, 'ionicons.svg')
-  svg_file = open(svg_path, 'r+')
-  svg_text = svg_file.read()
-  svg_file.seek(0)
+  with open(svg_path, 'r+') as svg_file:
+    svg_text = svg_file.read()
+    svg_file.seek(0)
 
-  for ionicon in data['icons']:
-    # uniF2CA
-    org_name = 'uni%s' % (ionicon['code'].replace('0x', '').upper())
-    ion_name = 'ion-%s' % (ionicon['name'])
-    svg_text = svg_text.replace(org_name, ion_name)
+    for ionicon in data['icons']:
+      # uniF2CA
+      org_name = 'uni%s' % (ionicon['code'].replace('0x', '').upper())
+      ion_name = 'ion-%s' % (ionicon['name'])
+      svg_text = svg_text.replace(org_name, ion_name)
 
-  svg_file.write(svg_text)
-  svg_file.close()
+    svg_file.write(svg_text)
 
 
 def generate_less(data):
@@ -308,9 +307,8 @@ def generate_bower_json(data):
 
 def get_build_data():
   build_data_path = os.path.join(BUILDER_PATH, 'build_data.json')
-  f = open(build_data_path, 'r')
-  data = json.loads(f.read())
-  f.close()
+  with open(build_data_path, 'r') as f:
+    data = json.loads(f.read())
   return data
 
 
