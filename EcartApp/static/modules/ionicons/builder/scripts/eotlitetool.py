@@ -281,8 +281,7 @@ def eotname(ttf):
     return ttf + '.eotlite'
 
 def readfont(f):
-    data = open(f, 'rb').read()
-    return data
+    return open(f, 'rb').read()
 
 def get_table_directory(data):
     """read the SFNT header and table directory"""
